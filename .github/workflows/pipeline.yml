@@ -8,41 +8,53 @@ on:
     types: [opened, synchronize]
 
 jobs:
-
-  avoid_reduncy:
+  prepare:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20]
     steps:
-      - name: Cancel Previous Redundant Builds
-        uses: styfle/cancel-workflow-action@0.9.1
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
         with:
-          access_token: ${{ github.token }}
+          node-version: ${{ matrix.node-version }}
+      - name: Cache node modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Install dependencies
+        run: npm ci
+      - name: Upload node_modules for subsequent jobs
+        uses: actions/upload-artifact@v2
+        with:
+          name: node_modules
+          path: node_modules
 
   lint:
+    needs: prepare
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
       - uses: actions/setup-node@v2
+      - name: Download node_modules
+        uses: actions/download-artifact@v2
         with:
-          cache: 'npm'
-          node-version: '20'
-      - name: Install dependencies
-        run: npm ci
+          name: node_modules
       - name: Lint
         run: npm run lint
 
   build:
+    needs: lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
       - uses: actions/setup-node@v2
+      - name: Download node_modules
+        uses: actions/download-artifact@v2
         with:
-          cache: 'npm'
-          node-version: '20'
-      - name: Install dependencies
-        run: npm ci
+          name: node_modules
       - name: Build
         run: npm run build
