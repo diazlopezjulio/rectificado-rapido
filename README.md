@@ -1,5 +1,9 @@
 # RectificadoRapido
 
+
+[![Deployment pipeline](https://github.com/diazlopezjulio/rectificado-rapido/actions/workflows/pipeline.yml/badge.svg)](https://github.com/diazlopezjulio/rectificado-rapido/actions/workflows/pipeline.yml)
+
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.10.
 
 ## Development server
