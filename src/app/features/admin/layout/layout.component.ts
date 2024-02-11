@@ -12,7 +12,9 @@ import { CommonModule } from '@angular/common';
 })
 export class LayoutComponent implements OnInit {
 	title: string = '';
+	isSubMenuOpen = false;
 	isMenuOpen = false;
+	isMobileSubMenuOpen = true;
 
 	constructor(private titleService: TitleService, private router: Router, private route: ActivatedRoute) { }
 
@@ -24,7 +26,15 @@ export class LayoutComponent implements OnInit {
 		return this.router.url !== route;
 	}
 
+	toggleSubMenu() {
+		this.isSubMenuOpen = !this.isSubMenuOpen;
+	}
+
 	toggleMenu() {
 		this.isMenuOpen = !this.isMenuOpen;
+	}
+
+	toggleMobileSubMenuOpen() {
+		this.isMobileSubMenuOpen = !this.isMobileSubMenuOpen;
 	}
 }
