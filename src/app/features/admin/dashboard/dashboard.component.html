@@ -1,0 +1,41 @@
+//Quiero que me crees un html que sea un login donde te pida un usuario y contraseña
+//Ademas que este html tenga un boton de login y registro, y que el boton de registro.
+//Que utilice tailwinds para que se vea bonito, y que usa el termino de "first mobile", recuerda que esta login es para
+//entrar al administrador de la pagina, por lo que debe ser un login seguro, y responsivo, respetando el first mobile
+// mi pagina es sobre un taller de autos, por lo que el login debe ser acorde a eso, y debe ser un login seguro.
+//Recuerda que el login debe ser seguro, y que el boton de registro debe llevar a un formulario de registro, que tambien
+
+
+<div class="flex justify-center items-center h-screen">
+    <div class="w-full max-w-xs">
+        <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+                    Usuario
+                </label>
+                <input
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="username" type="text" placeholder="Usuario">
+            </div>
+            <div class="mb-6">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+                    Contraseña
+                </label>
+                <input
+                    class="shadow appearance-none border border-red rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                    id="password" type="password" placeholder="Contraseña">
+                <p class="text-red text-xs italic">Por favor ingrese su contraseña.</p>
+            </div>
+            <div class="flex items-center justify-between">
+                <button
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    type="button">
+                    Iniciar Sesión
+                </button>
+                <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
+                    Registrarse
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
