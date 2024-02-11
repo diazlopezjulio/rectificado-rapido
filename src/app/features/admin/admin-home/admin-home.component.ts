@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { TitleService } from '../layout/services/title.services';
 
 @Component({
-	selector: 'app-dashboard',
+	selector: 'app-admin-home',
 	standalone: true,
 	imports: [],
-	templateUrl: './dashboard.component.html',
-	styleUrl: './dashboard.component.scss'
+	templateUrl: './admin-home.component.html',
+	styleUrl: './admin-home.component.scss'
 })
-export class DashboardComponent implements OnInit {
-	title: string = 'Dashboard';
+export class AdminHomeComponent implements OnInit {
+	title: string = 'Inicio';
 	constructor(private titleService: TitleService) { }
 
 	ngOnInit() {
