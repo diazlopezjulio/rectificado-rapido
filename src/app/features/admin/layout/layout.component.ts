@@ -12,6 +12,8 @@ import { CommonModule } from '@angular/common';
 })
 export class LayoutComponent implements OnInit {
 	title: string = '';
+	isMenuOpen = false;
+
 	constructor(private titleService: TitleService, private router: Router, private route: ActivatedRoute) { }
 
 	ngOnInit() {
@@ -20,5 +22,9 @@ export class LayoutComponent implements OnInit {
 
 	isNotCurrentRoute(route: string): boolean {
 		return this.router.url !== route;
+	}
+
+	toggleMenu() {
+		this.isMenuOpen = !this.isMenuOpen;
 	}
 }
