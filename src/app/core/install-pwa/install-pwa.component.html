@@ -1,16 +1,17 @@
 @if (showButton) {
 <div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-screen w-screen flex items-center justify-center"
-    (click)="cancelInstall()">
+    (click)="closeModal()">
     <div class="bg-white p-4 md:p-8 rounded-lg shadow-lg max-w-md m-4" (click)="$event.stopPropagation()">
         <!-- Contenido del modal -->
         <h2 class="text-xl md:text-2xl font-bold mb-4">Instalar Aplicación</h2>
         <p class="mb-4">¿Te gustaría instalar nuestra aplicación para una mejor experiencia?</p>
         <div class="mt-4 flex justify-end">
-            <button (click)="addToHomeScreen()" class="install-button text-white font-bold py-2 px-4 rounded mr-2">
+            <button (click)="addToHomeScreen()"
+                class="text-white font-bold py-2 px-4 rounded mr-2 bg-[#101e34eb] hover:bg-[#101e34] animate-pulse">
                 Instalar
             </button>
             <button (click)="cancelInstall()"
-                class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                class="bg-gray-300 hover:bg-gray-400 text-white font-bold py-2 px-4 rounded">
                 Cancelar
             </button>
         </div>

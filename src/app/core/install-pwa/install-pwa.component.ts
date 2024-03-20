@@ -16,11 +16,18 @@ export class InstallPwaComponent implements OnInit {
 
 	ngOnInit(): void {
 		if (isPlatformBrowser(this.platformId)) {
-			console.log(1344);
 			window.addEventListener('beforeinstallprompt', (e) => {
 				e.preventDefault();
 				this.deferredPrompt = e;
-				this.showButton = true;
+				const lastPromptTime = localStorage.getItem('lastPromptTime');
+				const now = new Date();
+				const daysSinceLastPrompt = lastPromptTime ? (now.getTime() - new Date(lastPromptTime).getTime()) / (1000 * 3600 * 24) : null;
+
+				// Mostrar el modal solo si han pasado 30 días o nunca se ha mostrado
+				if (daysSinceLastPrompt === null || daysSinceLastPrompt > 30) {
+					this.showButton = true;
+				}
+
 			});
 		}
 	}
@@ -40,6 +47,12 @@ export class InstallPwaComponent implements OnInit {
 	}
 
 	cancelInstall(): void {
+		const now = new Date();
+		localStorage.setItem('lastPromptTime', now.toString());
+		this.showButton = false;  // Cierra el modal si el usuario cancela
+	}
+
+	closeModal(): void {
 		this.showButton = false;  // Cierra el modal si el usuario cancela
 	}
 }
