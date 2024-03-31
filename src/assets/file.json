@@ -1,0 +1,57 @@
+{
+  "Usuario": [
+    {
+      "id": 1,
+      "nombreUsuario": "usuario1",
+      "hashContrasena": "hash_aqui",
+      "sal": "sal_aqui",
+      "correoElectronico": "usuario1@correo.com",
+      "fechaCreacion": "2023-01-01T12:00:00",
+      "fechaUltimoAcceso": "2023-01-02T15:00:00",
+      "estado": true,
+      "intentosLogin": 0,
+      "bloqueado": false,
+      "imagenUrl": "https://ejemplo.com/imagen1.jpg"
+    }
+  ],
+  "VehiculoTipo": [
+    {
+      "id": "60bf98bb-d5f5-43b8-aed8-cf9a9a46b246",
+      "nombre": "Gasolina",
+      "descripcion": "Tipos de Vehiculos que utilizan gasolina",
+      "imagenUrl": "https://ejemplo.com/sedan.jpg"
+    }
+  ],
+  "Marca": [
+    {
+      "id": 1,
+      "nombre": "Toyota",
+      "imagenUrl": "https://ejemplo.com/toyota.jpg"
+    }
+  ],
+  "Modelo": [
+    {
+      "id": 1,
+      "marcaId": 1,
+      "tipoId": 1,
+      "nombre": "Corolla",
+      "imagenUrl": "https://ejemplo.com/corolla.jpg"
+    }
+  ],
+  "Servicio": [
+    {
+      "id": 1,
+      "descripcion": "Cambio de aceite"
+    }
+  ],
+  "ModeloServicio": [
+    {
+      "id": 1,
+      "modeloId": 1,
+      "servicioId": 1,
+      "cantidad": 1,
+      "precio": 49.99,
+      "sku": "ACEITE123"
+    }
+  ]
+}
