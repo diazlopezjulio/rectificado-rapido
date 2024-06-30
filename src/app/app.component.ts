@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { InstallPwaComponent } from './core/install-pwa/install-pwa.component';
-import { DataSyncService } from './core/services/data-sync.service';
 import { HttpClientModule } from '@angular/common/http';
 
 @Component({
@@ -15,9 +14,9 @@ import { HttpClientModule } from '@angular/common/http';
 export class AppComponent {
 	title = 'rectificado-rapido';
 
-	constructor(private dataSyncService: DataSyncService) { }
+	constructor() { }
 
 	ngOnInit() {
-		this.dataSyncService.checkAndUpdateData();
+		//vacio
 	}
 }
