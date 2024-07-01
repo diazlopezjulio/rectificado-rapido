@@ -1,23 +1,5 @@
-.logo-css:hover{
-    .mouse-over{
-        animation: pulse 2s infinite;
-    }
-}
-
-
-
-
-@keyframes pulse {
-  0% {
-    width: 28px;
-    height: 28px;
-  }
-  50% {
-    width: 23px;
-    height: 23px;
-  }
-  100% {
-    width: 28px;
-    height: 28px;
-  }
+:host ::ng-deep .p-dialog .product-image {
+  width: 150px;
+  margin: 0 auto 2rem auto;
+  display: block;
 }

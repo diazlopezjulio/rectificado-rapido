@@ -15,10 +15,11 @@
                                 class="rounded-md px-3 py-2 text-sm font-medium hover:bg-gray-700 hover:text-white"
                                 routerLinkActive="bg-gray-900 text-white"
                                 [ngClass]="{'text-gray-300': isNotCurrentRoute('/admin/dashboard')}">Dashboard</a>
-                            <a [routerLink]="['/admin/combustion']"
+                            <a [routerLink]="['/admin/tipo-vehiculo']"
                                 class="rounded-md px-3 py-2 text-sm font-medium hover:bg-gray-700 hover:text-white"
                                 routerLinkActive="bg-gray-900 text-white"
-                                [ngClass]="{'text-gray-300': isNotCurrentRoute('/admin/combustion')}">Combustión</a>
+                                [ngClass]="{'text-gray-300': isNotCurrentRoute('/admin/tipo-vehiculo')}">Tipos de
+                                Vehiculos</a>
                             <a [routerLink]="['/admin/marca']"
                                 class="rounded-md px-3 py-2 text-sm font-medium hover:bg-gray-700 hover:text-white"
                                 routerLinkActive="bg-gray-900 text-white"
@@ -111,9 +112,9 @@
                 <a [routerLink]="['/admin/dashboard']" class="block rounded-md px-3 py-2 text-base font-medium"
                     routerLinkActive="bg-gray-900 text-white"
                     [ngClass]="{'text-gray-300': isNotCurrentRoute('/admin/dashboard')}">Dashboard</a>
-                <a [routerLink]="['/admin/combustion']" class="block rounded-md px-3 py-2 text-base font-medium"
+                <a [routerLink]="['/admin/tipo-vehiculo']" class="block rounded-md px-3 py-2 text-base font-medium"
                     routerLinkActive="bg-gray-900 text-white"
-                    [ngClass]="{'text-gray-300': isNotCurrentRoute('/admin/combustion')}">Combustión</a>
+                    [ngClass]="{'text-gray-300': isNotCurrentRoute('/admin/tipo-vehiculo')}">Tipos de Vehiculos</a>
                 <a [routerLink]="['/admin/marca']" class="block rounded-md px-3 py-2 text-base font-medium"
                     routerLinkActive="bg-gray-900 text-white"
                     [ngClass]="{'text-gray-300': isNotCurrentRoute('/admin/marca')}">Marcas</a>
