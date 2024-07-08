@@ -1,8 +1,12 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './home.component';
+import { LayoutComponent } from './layout/layout.component';
+import { InicioComponent } from './inicio/inicio.component';
 
 export const routes: Routes = [
-	// Define la ruta de la página principal
-	{ path: '', component: HomeComponent, pathMatch: 'full' },
-	// Añade aquí otras rutas
+	{
+		path: '', component: LayoutComponent, pathMatch: 'full',
+		children: [
+			{ path: '', component: InicioComponent },
+		]
+	}
 ];

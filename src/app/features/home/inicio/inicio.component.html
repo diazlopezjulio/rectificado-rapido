@@ -1,0 +1,88 @@
+<div class="card">
+    <p-toolbar styleClass="mb-4 gap-2">
+        <ng-template pTemplate="left">
+            <p-button pRipple severity="success" label="New" icon="pi pi-plus" class="mr-2" (click)="openNew()" />
+        </ng-template>
+    </p-toolbar>
+    <p-dataView #dv [value]="products" [layout]="layout" filterBy="nombre">
+        <ng-template pTemplate="header">
+            <div class="flex justify-content-end">
+                <span class="p-input-icon-left p-mb-2 p-mb-md-0">
+                    <i class="pi pi-search"></i>
+                    <input type="search" pInputText placeholder="Buscar..." (input)="myfilter($event)"
+                        class="p-inputtext p-component p-element">
+                </span>
+                <p-dataViewLayoutOptions [layout]="layout" />
+            </div>
+        </ng-template>
+        <ng-template pTemplate="list" let-products>
+            <div class="grid grid-nogutter">
+                <div class="col-12" *ngFor="let item of products; let first = first" class="col-12">
+                    <div class="flex flex-column sm:flex-row sm:align-items-center p-4 gap-3"
+                        [ngClass]="{ 'border-top-1 surface-border': !first }">
+                        <div
+                            class="flex flex-column md:flex-row justify-content-between md:align-items-center flex-1 gap-4">
+                            <div class="flex flex-row md:flex-column justify-content-between align-items-start gap-2">
+                                <div>
+                                    <span class="font-medium text-secondary text-sm">Tipo de Combustión</span>
+                                    <div class="text-lg font-medium text-900 mt-2">{{ item?.nombre }}</div>
+                                </div>
+                            </div>
+                            <div class="flex flex-column md:align-items-end gap-5">
+                                <div class="flex flex-row-reverse md:flex-row gap-2">
+                                    <p-button icon="pi pi-cog" [outlined]="true" />
+                                    <p-button icon="pi pi-bullseye" class="flex-auto md:flex-initial white-space-nowrap"
+                                        label="Seleccionar" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template let-product pTemplate="grid" let-products>
+            <div class="grid grid-nogutter">
+                <div class="col-12 sm:col-6 md:col-4 xl:col-6 p-2" *ngFor="let product of products">
+                    <div class="p-4 border-1 surface-border surface-card border-round flex flex-column">
+                        <div class="pt-4">
+                            <div class="flex flex-row justify-content-between align-items-start gap-2">
+                                <div>
+                                    <span class="font-medium text-secondary text-sm">Tipo de Combustión</span>
+                                    <div class="text-lg font-medium text-900 mt-1">{{ product?.nombre }}</div>
+                                </div>
+                            </div>
+                            <div class="flex flex-column gap-4 mt-4">
+                                <div class="flex gap-2">
+                                    <p-button icon="pi pi-bullseye" class="flex-auto md:flex-initial white-space-nowrap"
+                                        label="Seleccionar" />
+                                    <p-button icon="pi pi-cog" [outlined]="true" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </p-dataView>
+
+
+</div>
+
+
+<p-dialog [(visible)]="productDialog" [style]="{ width: '450px' }" header="Product Details" [modal]="true"
+    styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="field">
+            <label for="nombre">Nombre</label>
+            <input type="text" pInputText id="nombre" [(ngModel)]="product.nombre" required autofocus />
+            <small class="p-error" *ngIf="submitted && !product?.nombre">
+                Nombre es requerido.
+            </small>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <p-button pRipple label="Cancel" icon="pi pi-times" [text]="true" (click)="hideDialog()" />
+        <p-button pRipple label="Save" icon="pi pi-check" [text]="true" (click)="saveProduct()" />
+    </ng-template>
+</p-dialog>

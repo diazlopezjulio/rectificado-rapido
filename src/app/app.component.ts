@@ -29,14 +29,6 @@ export class AppComponent {
 				console.log(vehiculos);
 			}
 		});
-		this.vehiculoTipoService.addVehiculoTipo({
-			nombre: 'Vehiculo 1',
-			abreviacion: 'V1',
-			descripcion: 'Vehiculo 1',
-			imagenUrl: 'https://via.placeholder.com/150'
-		}).subscribe(data => {
-			console.log(data);
-		});
 
 	}
 }

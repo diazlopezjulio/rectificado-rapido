@@ -1,6 +1,6 @@
 export interface VehiculoTipo {
     id?: number;
-    nombre: string;
+    nombre?: string;
     abreviacion?: string;
     descripcion?: string;
     imagenUrl?: string;

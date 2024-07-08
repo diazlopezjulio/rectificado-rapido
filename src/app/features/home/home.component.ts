@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ToolbarModule } from 'primeng/toolbar';
 import { AvatarModule } from 'primeng/avatar';
 import { CardModule } from 'primeng/card';
-import { TableModule } from 'primeng/table';
+import { Table, TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
 import { ButtonModule } from 'primeng/button';
@@ -156,5 +156,15 @@ export class HomeComponent {
 			default:
 				return 'info';
 		}
+	}
+
+	@ViewChild('dt') dt!: Table;
+
+
+
+	filterInput(event: Event): void {
+		const target = event.target as HTMLInputElement; // Conversión de tipo
+		console.log(target.value);
+		this.dt.filterGlobal(target.value, 'contains'); // Llamada a la función con el valor
 	}
 }
