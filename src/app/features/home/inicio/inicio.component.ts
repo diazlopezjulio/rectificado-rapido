@@ -23,6 +23,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { FormsModule } from '@angular/forms';
+import { TitleService } from '../layout/services/title.services';
 
 @Component({
 	selector: 'app-inicio',
@@ -46,16 +47,17 @@ import { FormsModule } from '@angular/forms';
 		InputTextareaModule,
 		RadioButtonModule,
 		FormsModule,
-		InputNumberModule
+		InputNumberModule,
+		ToastModule
 	],
 	schemas: [CUSTOM_ELEMENTS_SCHEMA],
 	templateUrl: './inicio.component.html',
-	providers: [ProductService],
+	providers: [ProductService, MessageService, ConfirmationService],
 	styleUrl: './inicio.component.scss'
 })
 export class InicioComponent {
-
-	constructor(private vehiculoTipoService: VehiculoTipoService, private primengConfig: PrimeNGConfig) { }
+	titulo = 'Bienvenido a Rectificado Rápido';
+	constructor(private titleService: TitleService, private vehiculoTipoService: VehiculoTipoService, private primengConfig: PrimeNGConfig, private messageService: MessageService, private confirmationService: ConfirmationService) { }
 
 	layout: 'list' | 'grid' = 'list';
 
@@ -71,6 +73,7 @@ export class InicioComponent {
 
 	ngOnInit() {
 		this.layout = 'list';
+		this.titleService.changeTitle(this.titulo);
 		this.sortOptions = [
 			{ label: 'Price High to Low', value: '!price' },
 			{ label: 'Price Low to High', value: 'price' }
@@ -128,7 +131,7 @@ export class InicioComponent {
 
 		if (this.product.nombre?.trim()) {
 			if (this.product.id) {
-				//this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
+				this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
 			} else {
 				this.vehiculoTipoService.addVehiculoTipo({
 					nombre: this.product.nombre,
@@ -137,7 +140,7 @@ export class InicioComponent {
 					imagenUrl: 'https://via.placeholder.com/150'
 				}).subscribe(data => {
 					console.log(data);
-					//this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
+					this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
 					this.vehiculoTipoService.getAllVehiculoTipos().subscribe({
 						next: (vehiculos) => {
 							this.products = vehiculos;
