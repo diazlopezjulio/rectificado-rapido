@@ -65,11 +65,6 @@ export class InicioComponent {
 
 	searchValue: string | undefined;
 
-	sortOptions!: SelectItem[];
-	sortOrder!: number;
-
-	sortField!: string;
-
 
 	ngOnInit() {
 		this.layout = 'list';
