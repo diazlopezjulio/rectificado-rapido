@@ -72,9 +72,6 @@ export class InicioComponent {
 		});
 	}
 
-
-
-
 	filtroPalabras(event: Event, filterMatchMode: string = 'contains') {
 		const target = event.target as HTMLInputElement;
 		const filter = target.value;
@@ -125,7 +122,6 @@ export class InicioComponent {
 		this.vehiculoTipoDialog = true;
 	}
 
-
 	ocultarDialogo() {
 		this.vehiculoTipoDialog = false;
 		this.submitted = false;
@@ -160,5 +156,4 @@ export class InicioComponent {
 			}
 		});
 	}
-
 }
