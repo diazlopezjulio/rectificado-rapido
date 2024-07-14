@@ -74,10 +74,6 @@ export class InicioComponent {
 	ngOnInit() {
 		this.layout = 'list';
 		this.titleService.changeTitle(this.titulo);
-		this.sortOptions = [
-			{ label: 'Price High to Low', value: '!price' },
-			{ label: 'Price Low to High', value: 'price' }
-		];
 
 		this.primengConfig.ripple = true;
 		this.vehiculoTipoService.getAllVehiculoTipos().subscribe({
@@ -96,6 +92,8 @@ export class InicioComponent {
 
 	submitted: boolean = false;
 
+	pressTimer: any;
+
 
 	myfilter(event: Event, filterMatchMode: string = 'contains') {
 		const target = event.target as HTMLInputElement; // Conversión de tipo
@@ -103,44 +101,76 @@ export class InicioComponent {
 		this.dv.filter(filter, filterMatchMode);
 	}
 
-	onSortChange(event: Event) {
-		const target = event.target as HTMLInputElement; // Conversión de tipo
-		const value = target.value;
-
-		if (value.indexOf('!') === 0) {
-			this.sortOrder = -1;
-			this.sortField = value.substring(1, value.length);
-		} else {
-			this.sortOrder = 1;
-			this.sortField = value;
-		}
+	onMouseDown(item: VehiculoTipo) {
+		this.product = item;
+		this.pressTimer = setTimeout(() =>
+			this.borrarVheiculoTipo(item), 1000); // Ajusta el tiempo según necesites
 	}
 
-	openNew() {
+	onMouseUp() {
+		clearTimeout(this.pressTimer);
+		this.product = {};
+	}
+
+	isSelected(item: VehiculoTipo): boolean {
+		return this.product === item;
+	}
+
+	borrarVheiculoTipo(product: VehiculoTipo) {
+		this.confirmationService.confirm({
+			message: '¿Estás seguro de que quieres eliminar ' + product.nombre + '?',
+			header: 'Confirmar',
+			icon: 'pi pi-exclamation-triangle',
+			accept: () => {
+				this.vehiculoTipoService.deleteVehiculoTipo(this.product).subscribe(data => {
+					console.log(data);
+					this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Eliminado con exito', life: 3000 });
+					this.vehiculoTipoService.getAllVehiculoTipos().subscribe({
+						next: (vehiculos) => {
+							this.products = vehiculos;
+						}
+					});
+				});
+
+			}
+		});
+	}
+
+	agregarTipoVehiculo() {
 		this.product = {};
 		this.submitted = false;
 		this.productDialog = true;
 	}
-	hideDialog() {
+
+	editarTipoVehiculo(product: VehiculoTipo) {
+		this.product = { ...product };
+		this.productDialog = true;
+	}
+
+
+	ocultarDialogo() {
 		this.productDialog = false;
 		this.submitted = false;
 	}
 
-	saveProduct() {
+	guardarTipoVehiculo() {
 		this.submitted = true;
 
 		if (this.product.nombre?.trim()) {
 			if (this.product.id) {
-				this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
-			} else {
-				this.vehiculoTipoService.addVehiculoTipo({
-					nombre: this.product.nombre,
-					abreviacion: 'V1',
-					descripcion: 'Vehiculo 1',
-					imagenUrl: 'https://via.placeholder.com/150'
-				}).subscribe(data => {
+				this.vehiculoTipoService.updateVehiculoTipo(this.product.id, this.product).subscribe(data => {
 					console.log(data);
-					this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
+					this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Actualizado con exito', life: 3000 });
+					this.vehiculoTipoService.getAllVehiculoTipos().subscribe({
+						next: (vehiculos) => {
+							this.products = vehiculos;
+						}
+					});
+				});
+			} else {
+				this.vehiculoTipoService.addVehiculoTipo(this.product).subscribe(data => {
+					console.log(data);
+					this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Agregado con exito', life: 3000 });
 					this.vehiculoTipoService.getAllVehiculoTipos().subscribe({
 						next: (vehiculos) => {
 							this.products = vehiculos;

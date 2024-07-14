@@ -11,7 +11,7 @@ export class VehiculoTipoService {
 
 	constructor(private dbService: NgxIndexedDBService) { }
 
-	addVehiculoTipo(vehiculoTipo: VehiculoTipo): Observable<any> {
+	addVehiculoTipo(vehiculoTipo: VehiculoTipo): Observable<VehiculoTipo> {
 		return this.dbService.add('vehiculoTipo', vehiculoTipo);
 	}
 
@@ -19,11 +19,12 @@ export class VehiculoTipoService {
 		return this.dbService.getByKey('vehiculoTipo', id);
 	}
 
-	updateVehiculoTipo(id: number, vehiculoTipo: Partial<VehiculoTipo>): Observable<any> {
+	updateVehiculoTipo(id: number, vehiculoTipo: Partial<VehiculoTipo>): Observable<VehiculoTipo> {
 		return this.dbService.update('vehiculoTipo', vehiculoTipo);
 	}
 
-	deleteVehiculoTipo(id: number): Observable<any> {
+	deleteVehiculoTipo(vehiculoTipo: Partial<VehiculoTipo>): Observable<any> {
+		const id = vehiculoTipo.id || 0;
 		return this.dbService.delete('vehiculoTipo', id);
 	}
 

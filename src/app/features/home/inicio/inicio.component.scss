@@ -1,8 +1,5 @@
-.clickable-card {
-    cursor: pointer;
-    transition: transform 0.2s;
-}
-
-.clickable-card:hover {
-    transform: scale(1.05);
+/* Estilo cuando está seleccionado */
+.div-seleccionada {
+    border: 1px solid blue;
+    /* Ejemplo de estilo para cuando está seleccionado */
 }
