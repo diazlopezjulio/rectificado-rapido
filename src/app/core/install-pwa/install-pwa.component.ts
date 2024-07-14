@@ -1,16 +1,18 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
 	selector: 'app-install-pwa',
 	standalone: true,
-	imports: [],
+	imports: [DialogModule, ButtonModule],
 	templateUrl: './install-pwa.component.html',
 	styleUrl: './install-pwa.component.scss'
 })
 export class InstallPwaComponent implements OnInit {
 	deferredPrompt: any;
-	showButton = false;
+	displayModal = false;
 
 	constructor(@Inject(PLATFORM_ID) private platformId: any) { }
 
@@ -25,7 +27,7 @@ export class InstallPwaComponent implements OnInit {
 
 				// Mostrar el modal solo si han pasado 30 días o nunca se ha mostrado
 				if (daysSinceLastPrompt === null || daysSinceLastPrompt > 30) {
-					this.showButton = true;
+					this.displayModal = true;
 				}
 
 			});
@@ -49,10 +51,10 @@ export class InstallPwaComponent implements OnInit {
 	cancelInstall(): void {
 		const now = new Date();
 		localStorage.setItem('lastPromptTime', now.toString());
-		this.showButton = false;  // Cierra el modal si el usuario cancela
+		this.displayModal = false;  // Cierra el modal si el usuario cancela
 	}
 
 	closeModal(): void {
-		this.showButton = false;  // Cierra el modal si el usuario cancela
+		this.displayModal = false;  // Cierra el modal si el usuario cancela
 	}
 }
