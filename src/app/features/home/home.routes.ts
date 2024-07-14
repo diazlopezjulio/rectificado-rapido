@@ -14,7 +14,7 @@ export const routes: Routes = [
 			{ path: 'servicios', component: ServicioComponent },
 			{ path: 'configuracion', component: ConfiguracionComponent },
 			{ path: 'tipo-vehiculo', component: TipoVehiculoComponent },
-			{ path: 'marca', component: MarcaComponent },
+			{ path: 'marcas', component: MarcaComponent },
 		]
 	}
 ];
