@@ -123,10 +123,14 @@ export class InicioComponent {
 					this.vehiculoTipoService.getAllVehiculoTipos().subscribe({
 						next: (vehiculos) => {
 							this.products = vehiculos;
+							this.product = {};
 						}
 					});
 				});
 
+			},
+			reject: () => {
+				this.product = {};
 			}
 		});
 	}
