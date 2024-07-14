@@ -9,7 +9,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { ProductService } from '../../admin/layout/services/productservice';
 import { VehiculoTipo } from '../../../shared/models/vehiculo-tipo.model';
 import { VehiculoTipoService } from '../../../core/services/vehiculo-tipo.service';
-import { SelectItem, PrimeNGConfig, MessageService, ConfirmationService } from 'primeng/api';
+import { PrimeNGConfig, MessageService, ConfirmationService } from 'primeng/api';
 import { ToolbarModule } from 'primeng/toolbar';
 import { AvatarModule } from 'primeng/avatar';
 import { CardModule } from 'primeng/card';
@@ -99,7 +99,7 @@ export class InicioComponent {
 	onMouseDown(item: VehiculoTipo) {
 		this.product = item;
 		this.pressTimer = setTimeout(() =>
-			this.borrarVheiculoTipo(item), 1000); // Ajusta el tiempo según necesites
+			this.borrarVheiculoTipo(item), 700); // Ajusta el tiempo según necesites
 	}
 
 	onMouseUp() {
