@@ -1,0 +1,102 @@
+<div class="card">
+    <p-toast />
+    <p-toolbar styleClass="mb-4 gap-2">
+        <ng-template pTemplate="left">
+            <p-button pRipple severity="success" label="Agregar" icon="pi pi-plus" class="mr-2"
+                (click)="agregarServicio()" />
+        </ng-template>
+        <ng-template pTemplate="right">
+            <h3>Tipo de Servicios</h3>
+        </ng-template>
+    </p-toolbar>
+    <p-dataView #dv [value]="listadoServicios" [layout]="layout" filterBy="nombre"
+        emptyMessage="No se encontraron registros que mostrar">
+        <ng-template pTemplate="header">
+            <div class="flex justify-content-end">
+                <span class="p-input-icon-left p-mb-2 p-mb-md-0 mr-2">
+                    <i class="pi pi-search"></i>
+                    <input type="search" pInputText placeholder="Buscar..." (input)="filtroPalabras($event)"
+                        class="p-inputtext p-component p-element">
+                </span>
+                <p-dataViewLayoutOptions [layout]="layout" />
+            </div>
+        </ng-template>
+        <ng-template pTemplate="list" let-listadoServicios>
+            <div class="grid grid-nogutter">
+                <div class="col-12" *ngFor="let item of listadoServicios; let first = first" class="col-12">
+                    <div class="flex flex-column sm:flex-row sm:align-items-center p-4 gap-3"
+                        [ngClass]="{ 'div-seleccionada': isSelected(item), 'border-top-1 surface-border': !first }"
+                        (mousedown)="onMouseDown(item)" (mouseup)="onMouseUp()" (touchstart)="onMouseDown(item)"
+                        (touchend)="onMouseUp()">
+                        <div
+                            class="flex flex-column md:flex-row justify-content-between md:align-items-center flex-1 gap-4">
+                            <div class="flex flex-row md:flex-column justify-content-between align-items-start gap-2">
+                                <div>
+                                    <span class="font-medium text-secondary text-sm">Tipo de Servicio</span>
+                                    <div class="text-lg font-medium text-900 mt-2">{{ item?.nombre }}</div>
+                                </div>
+                            </div>
+                            <div class="flex flex-column md:align-items-end gap-5">
+                                <div class="flex flex-row-reverse md:flex-row gap-2">
+                                    <p-button icon="pi pi-cog" [outlined]="true" (click)="editarServicio(item)" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template let-item pTemplate="grid" let-listadoServicios>
+            <div class="grid grid-nogutter">
+                <div class="col-12 sm:col-6 md:col-4 xl:col-6 p-2" *ngFor="let item of listadoServicios">
+                    <div class="p-4 border-1 surface-border surface-card border-round flex flex-column"
+                        [ngClass]="{ 'div-seleccionada': isSelected(item)}" (mousedown)="onMouseDown(item)"
+                        (mouseup)="onMouseUp()" (touchstart)="onMouseDown(item)" (touchend)="onMouseUp()">
+                        <div class="pt-4">
+                            <div class="flex flex-row justify-content-between align-items-start gap-2">
+                                <div>
+                                    <span class="font-medium text-secondary text-sm">Tipo de Servicio</span>
+                                    <div class="text-lg font-medium text-900 mt-1">{{ item?.nombre }}</div>
+                                </div>
+                            </div>
+                            <div class="flex flex-column gap-4 mt-4">
+                                <div class="flex gap-2">
+                                    <p-button icon="pi pi-cog" [outlined]="true" (click)="editarServicio(item)" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </p-dataView>
+
+
+</div>
+
+<p-confirmDialog [style]="{ width: '450px' }" acceptLabel="Aceptar" rejectLabel="Cancelar" />
+<p-dialog [(visible)]="servicioDialog" [style]="{ width: '450px' }" header="Servicio" [modal]="true"
+    styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="field">
+            <label for="nombre">Nombre</label>
+            <input type="text" pInputText id="nombre" [(ngModel)]="servicio.nombre" required autofocus />
+            <small class="p-error" *ngIf="submitted && !servicio?.nombre">
+                Nombre es requerido.
+            </small>
+        </div>
+        <div class="field">
+            <label for="abreviacion">Abreviación</label>
+            <input type="text" pInputText id="abreviacion" [(ngModel)]="servicio.abreviacion" required autofocus />
+            <small class="p-error" *ngIf="submitted && !servicio?.abreviacion">
+                Abreviación requerido.
+            </small>
+        </div>
+    </ng-template>
+
+
+    <ng-template pTemplate="footer">
+        <p-button pRipple label="Cancelar" icon="pi pi-times" [text]="true" (click)="ocultarDialogo()" />
+        <p-button pRipple label="Guardar" icon="pi pi-check" [text]="true" (click)="guardarServicio()" />
+    </ng-template>
+</p-dialog>
