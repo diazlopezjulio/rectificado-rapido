@@ -24,7 +24,7 @@ export class VehiculoTipoService {
 	}
 
 	deleteVehiculoTipo(vehiculoTipo: Partial<VehiculoTipo>): Observable<any> {
-		const id = vehiculoTipo.id || 0;
+		const id = vehiculoTipo.id ?? 0;
 		return this.dbService.delete('vehiculoTipo', id);
 	}
 

@@ -1,27 +1,17 @@
 import { CUSTOM_ELEMENTS_SCHEMA, Component, ViewChild } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
-import { DataViewModule } from 'primeng/dataview';
-import { DataView } from 'primeng/dataview';
-import { TagModule } from 'primeng/tag';
-import { RatingModule } from 'primeng/rating';
+import { DataViewModule, DataView } from 'primeng/dataview';
 import { CommonModule } from '@angular/common';
-import { DropdownModule } from 'primeng/dropdown';
-import { ProductService } from '../../admin/layout/services/productservice';
 import { VehiculoTipo } from '../../../shared/models/vehiculo-tipo.model';
 import { VehiculoTipoService } from '../../../core/services/vehiculo-tipo.service';
 import { PrimeNGConfig, MessageService, ConfirmationService } from 'primeng/api';
 import { ToolbarModule } from 'primeng/toolbar';
-import { AvatarModule } from 'primeng/avatar';
 import { CardModule } from 'primeng/card';
-import { TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
 import { RippleModule } from 'primeng/ripple';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { InputTextModule } from 'primeng/inputtext';
-import { InputTextareaModule } from 'primeng/inputtextarea';
-import { RadioButtonModule } from 'primeng/radiobutton';
-import { InputNumberModule } from 'primeng/inputnumber';
 import { FormsModule } from '@angular/forms';
 import { TitleService } from '../layout/services/title.services';
 
@@ -30,40 +20,44 @@ import { TitleService } from '../layout/services/title.services';
 	standalone: true,
 	imports: [
 		DataViewModule,
-		TagModule,
-		RatingModule,
 		ButtonModule,
 		CommonModule,
-		DropdownModule,
 		ToolbarModule,
-		AvatarModule,
 		CardModule,
-		TableModule,
 		DialogModule,
 		RippleModule,
 		ToastModule,
 		ConfirmDialogModule,
 		InputTextModule,
-		InputTextareaModule,
-		RadioButtonModule,
 		FormsModule,
-		InputNumberModule,
 		ToastModule
 	],
 	schemas: [CUSTOM_ELEMENTS_SCHEMA],
 	templateUrl: './inicio.component.html',
-	providers: [ProductService, MessageService, ConfirmationService],
+	providers: [MessageService, ConfirmationService],
 	styleUrl: './inicio.component.scss'
 })
 export class InicioComponent {
-	titulo = 'Bienvenido a Rectificado Rápido';
+
 	constructor(private titleService: TitleService, private vehiculoTipoService: VehiculoTipoService, private primengConfig: PrimeNGConfig, private messageService: MessageService, private confirmationService: ConfirmationService) { }
+
+	titulo = 'Bienvenido a Rectificado Rápido';
 
 	layout: 'list' | 'grid' = 'list';
 
-	products: VehiculoTipo[] = [];
+	listadoVehiculosTipos: VehiculoTipo[] = [];
 
 	searchValue: string | undefined;
+
+	@ViewChild('dv') dv!: DataView;
+
+	vehiculoTipoDialog: boolean = false;
+
+	vehiculoTipo!: VehiculoTipo;
+
+	submitted: boolean = false;
+
+	pressTimer!: ReturnType<typeof setTimeout>;
 
 
 	ngOnInit() {
@@ -73,42 +67,33 @@ export class InicioComponent {
 		this.primengConfig.ripple = true;
 		this.vehiculoTipoService.getAllVehiculoTipos().subscribe({
 			next: (vehiculos) => {
-				this.products = vehiculos;
+				this.listadoVehiculosTipos = vehiculos;
 			}
 		});
 	}
 
-	@ViewChild('dv') dv!: DataView;
-
-	productDialog: boolean = false;
 
 
-	product!: VehiculoTipo;
 
-	submitted: boolean = false;
-
-	pressTimer: any;
-
-
-	myfilter(event: Event, filterMatchMode: string = 'contains') {
-		const target = event.target as HTMLInputElement; // Conversión de tipo
+	filtroPalabras(event: Event, filterMatchMode: string = 'contains') {
+		const target = event.target as HTMLInputElement;
 		const filter = target.value;
 		this.dv.filter(filter, filterMatchMode);
 	}
 
 	onMouseDown(item: VehiculoTipo) {
-		this.product = item;
+		this.vehiculoTipo = item;
 		this.pressTimer = setTimeout(() =>
-			this.borrarVheiculoTipo(item), 700); // Ajusta el tiempo según necesites
+			this.borrarVheiculoTipo(item), 500);
 	}
 
 	onMouseUp() {
 		clearTimeout(this.pressTimer);
-		this.product = {};
+		this.vehiculoTipo = {};
 	}
 
 	isSelected(item: VehiculoTipo): boolean {
-		return this.product === item;
+		return this.vehiculoTipo === item;
 	}
 
 	borrarVheiculoTipo(product: VehiculoTipo) {
@@ -117,70 +102,63 @@ export class InicioComponent {
 			header: 'Confirmar',
 			icon: 'pi pi-exclamation-triangle',
 			accept: () => {
-				this.vehiculoTipoService.deleteVehiculoTipo(this.product).subscribe(data => {
-					console.log(data);
+				this.vehiculoTipoService.deleteVehiculoTipo(this.vehiculoTipo).subscribe(() => {
 					this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Eliminado con exito', life: 3000 });
-					this.vehiculoTipoService.getAllVehiculoTipos().subscribe({
-						next: (vehiculos) => {
-							this.products = vehiculos;
-							this.product = {};
-						}
-					});
+					this.obtenerTodosVehiculosTipo();
 				});
 
 			},
 			reject: () => {
-				this.product = {};
+				this.vehiculoTipo = {};
 			}
 		});
 	}
 
 	agregarTipoVehiculo() {
-		this.product = {};
+		this.vehiculoTipo = {};
 		this.submitted = false;
-		this.productDialog = true;
+		this.vehiculoTipoDialog = true;
 	}
 
 	editarTipoVehiculo(product: VehiculoTipo) {
-		this.product = { ...product };
-		this.productDialog = true;
+		this.vehiculoTipo = { ...product };
+		this.vehiculoTipoDialog = true;
 	}
 
 
 	ocultarDialogo() {
-		this.productDialog = false;
+		this.vehiculoTipoDialog = false;
 		this.submitted = false;
 	}
 
 	guardarTipoVehiculo() {
 		this.submitted = true;
 
-		if (this.product.nombre?.trim()) {
-			if (this.product.id) {
-				this.vehiculoTipoService.updateVehiculoTipo(this.product.id, this.product).subscribe(data => {
-					console.log(data);
+		if (this.vehiculoTipo.nombre?.trim()) {
+			if (this.vehiculoTipo.id) {
+				this.vehiculoTipoService.updateVehiculoTipo(this.vehiculoTipo.id, this.vehiculoTipo).subscribe(() => {
 					this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Actualizado con exito', life: 3000 });
-					this.vehiculoTipoService.getAllVehiculoTipos().subscribe({
-						next: (vehiculos) => {
-							this.products = vehiculos;
-						}
-					});
+					this.obtenerTodosVehiculosTipo();
 				});
 			} else {
-				this.vehiculoTipoService.addVehiculoTipo(this.product).subscribe(data => {
-					console.log(data);
+				this.vehiculoTipoService.addVehiculoTipo(this.vehiculoTipo).subscribe(() => {
 					this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Agregado con exito', life: 3000 });
-					this.vehiculoTipoService.getAllVehiculoTipos().subscribe({
-						next: (vehiculos) => {
-							this.products = vehiculos;
-						}
-					});
+					this.obtenerTodosVehiculosTipo();
 				});
 			}
 
-			this.productDialog = false;
-			this.product = {};
+			this.vehiculoTipoDialog = false;
+			this.vehiculoTipo = {};
 		}
+	}
+
+	obtenerTodosVehiculosTipo() {
+		this.vehiculoTipoService.getAllVehiculoTipos().subscribe({
+			next: (vehiculos) => {
+				this.listadoVehiculosTipos = vehiculos;
+				this.vehiculoTipo = {};
+			}
+		});
 	}
 
 }
