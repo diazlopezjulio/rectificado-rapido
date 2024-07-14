@@ -34,12 +34,16 @@ import { TitleService } from '../layout/services/title.services';
 	],
 	schemas: [CUSTOM_ELEMENTS_SCHEMA],
 	templateUrl: './inicio.component.html',
-	providers: [MessageService, ConfirmationService],
+	providers: [VehiculoTipoService, MessageService, ConfirmationService],
 	styleUrl: './inicio.component.scss'
 })
 export class InicioComponent {
 
-	constructor(private titleService: TitleService, private vehiculoTipoService: VehiculoTipoService, private primengConfig: PrimeNGConfig, private messageService: MessageService, private confirmationService: ConfirmationService) { }
+	constructor(private titleService: TitleService,
+		private vehiculoTipoService: VehiculoTipoService,
+		private primengConfig: PrimeNGConfig,
+		private messageService: MessageService,
+		private confirmationService: ConfirmationService) { }
 
 	titulo = 'Bienvenido a Rectificado Rápido';
 
@@ -59,17 +63,12 @@ export class InicioComponent {
 
 	pressTimer!: ReturnType<typeof setTimeout>;
 
-
 	ngOnInit() {
 		this.layout = 'list';
 		this.titleService.changeTitle(this.titulo);
 
 		this.primengConfig.ripple = true;
-		this.vehiculoTipoService.getAllVehiculoTipos().subscribe({
-			next: (vehiculos) => {
-				this.listadoVehiculosTipos = vehiculos;
-			}
-		});
+		this.obtenerTodosVehiculosTipo();
 	}
 
 	filtroPalabras(event: Event, filterMatchMode: string = 'contains') {
@@ -81,7 +80,7 @@ export class InicioComponent {
 	onMouseDown(item: VehiculoTipo) {
 		this.vehiculoTipo = item;
 		this.pressTimer = setTimeout(() =>
-			this.borrarVheiculoTipo(item), 500);
+			this.borrarVehiculoTipo(item), 500);
 	}
 
 	onMouseUp() {
@@ -93,13 +92,13 @@ export class InicioComponent {
 		return this.vehiculoTipo === item;
 	}
 
-	borrarVheiculoTipo(product: VehiculoTipo) {
+	borrarVehiculoTipo(vehiculoTipoSeleccionado: VehiculoTipo) {
 		this.confirmationService.confirm({
-			message: '¿Estás seguro de que quieres eliminar ' + product.nombre + '?',
+			message: '¿Estás seguro de que quieres eliminar ' + vehiculoTipoSeleccionado.nombre + '?',
 			header: 'Confirmar',
 			icon: 'pi pi-exclamation-triangle',
 			accept: () => {
-				this.vehiculoTipoService.deleteVehiculoTipo(this.vehiculoTipo).subscribe(() => {
+				this.vehiculoTipoService.deleteVehiculoTipo(vehiculoTipoSeleccionado).subscribe(() => {
 					this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Eliminado con exito', life: 3000 });
 					this.obtenerTodosVehiculosTipo();
 				});

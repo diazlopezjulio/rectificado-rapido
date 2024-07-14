@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { InstallPwaComponent } from './core/install-pwa/install-pwa.component';
 import { HttpClientModule } from '@angular/common/http';
-import { VehiculoTipoService } from './core/services/vehiculo-tipo.service';
 import { VehiculoTipo } from './shared/models/vehiculo-tipo.model';
 import { IndexedDBModule } from './indexeddb/indexeddb.module';
 
@@ -11,7 +10,7 @@ import { IndexedDBModule } from './indexeddb/indexeddb.module';
 	selector: 'app-root',
 	standalone: true,
 	imports: [CommonModule, RouterOutlet, InstallPwaComponent, HttpClientModule, IndexedDBModule],
-	providers: [VehiculoTipoService],
+	providers: [],
 	templateUrl: './app.component.html',
 	styleUrl: './app.component.scss'
 })
@@ -20,15 +19,9 @@ export class AppComponent {
 
 	vehiculoTipos: VehiculoTipo[] = [];
 
-	constructor(private vehiculoTipoService: VehiculoTipoService) { }
+	constructor() { }
 
 
 	ngOnInit() {
-		this.vehiculoTipoService.getAllVehiculoTipos().subscribe({
-			next: (vehiculos) => {
-				console.log(vehiculos);
-			}
-		});
-
 	}
 }
