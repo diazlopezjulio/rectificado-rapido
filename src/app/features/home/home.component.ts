@@ -106,7 +106,15 @@ export class HomeComponent {
 
 	saveProduct() {
 		this.submitted = true;
-
+		console.log(typeof this.product.inventoryStatus);
+		if (typeof this.product.inventoryStatus === 'string') {
+			if (this.product.inventoryStatus.trim()) {
+				const l = {
+					label: this.product.inventoryStatus.trim().toUpperCase(), value: this.product.inventoryStatus.trim()
+				};
+				this.statuses.push(l);
+			}
+		}
 		if (this.product.name?.trim()) {
 			if (this.product.id) {
 				this.products[this.findIndexById(this.product.id)] = this.product;

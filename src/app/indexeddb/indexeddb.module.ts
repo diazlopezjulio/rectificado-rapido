@@ -36,6 +36,18 @@ const dbConfig: DBConfig = {
 				{ name: 'descripcion', keypath: 'descripcion', options: { unique: false } },
 				{ name: 'imagenUrl', keypath: 'imagenUrl', options: { unique: false } }
 			]
+		},
+		{
+			store: 'modelo',
+			storeConfig: { keyPath: 'id', autoIncrement: true },
+			storeSchema: [
+				{ name: 'marcaId', keypath: 'marcaId', options: { unique: false } },
+				{ name: 'tipoId', keypath: 'tipoId', options: { unique: false } },
+				{ name: 'nombre', keypath: 'nombre', options: { unique: false } },
+				{ name: 'abreviacion', keypath: 'abreviacion', options: { unique: false } },
+				{ name: 'descripcion', keypath: 'descripcion', options: { unique: false } },
+				{ name: 'imagenUrl', keypath: 'imagenUrl', options: { unique: false } }
+			]
 		}
 	]
 };

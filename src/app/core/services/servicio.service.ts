@@ -10,20 +10,20 @@ export class ServicioService {
 
 	constructor(private dbService: NgxIndexedDBService) { }
 
-	addServicio(vehiculoTipo: Servicio): Observable<Servicio> {
-		return this.dbService.add('servicio', vehiculoTipo);
+	addServicio(servicio: Servicio): Observable<Servicio> {
+		return this.dbService.add('servicio', servicio);
 	}
 
 	getServicioById(id: number): Observable<Servicio> {
 		return this.dbService.getByKey('servicio', id);
 	}
 
-	updateServicio(id: number, vehiculoTipo: Partial<Servicio>): Observable<Servicio> {
-		return this.dbService.update('servicio', vehiculoTipo);
+	updateServicio(id: number, servicio: Partial<Servicio>): Observable<Servicio> {
+		return this.dbService.update('servicio', servicio);
 	}
 
-	deleteServicio(vehiculoTipo: Partial<Servicio>): Observable<any> {
-		const id = vehiculoTipo.id ?? 0;
+	deleteServicio(servicio: Partial<Servicio>): Observable<any> {
+		const id = servicio.id ?? 0;
 		return this.dbService.delete('servicio', id);
 	}
 

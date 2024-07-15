@@ -80,7 +80,7 @@ export class MarcaComponent {
 	onMouseDown(item: Marca) {
 		this.marca = item;
 		this.pressTimer = setTimeout(() =>
-			this.borrarVehiculoTipo(item), 500);
+			this.borrarMarca(item), 500);
 	}
 
 	onMouseUp() {
@@ -92,13 +92,13 @@ export class MarcaComponent {
 		return this.marca === item;
 	}
 
-	borrarVehiculoTipo(vehiculoTipoSeleccionado: Marca) {
+	borrarMarca(marcaSeleccionado: Marca) {
 		this.confirmationService.confirm({
-			message: '¿Estás seguro de que quieres eliminar ' + vehiculoTipoSeleccionado.nombre + '?',
+			message: '¿Estás seguro de que quieres eliminar ' + marcaSeleccionado.nombre + '?',
 			header: 'Confirmar',
 			icon: 'pi pi-exclamation-triangle',
 			accept: () => {
-				this.marcaService.deleteMarca(vehiculoTipoSeleccionado).subscribe(() => {
+				this.marcaService.deleteMarca(marcaSeleccionado).subscribe(() => {
 					this.messageService.add({ severity: 'success', summary: 'Exito', detail: 'Eliminado con exito', life: 3000 });
 					this.obtenerTodasMarcas();
 				});

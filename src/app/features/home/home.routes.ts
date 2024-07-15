@@ -5,6 +5,7 @@ import { ServicioComponent } from './servicio/servicio.component';
 import { ConfiguracionComponent } from './configuracion/configuracion.component';
 import { TipoVehiculoComponent } from './tipo-vehiculo/tipo-vehiculo.component';
 import { MarcaComponent } from './marca/marca.component';
+import { ModeloComponent } from './modelo/modelo.component';
 
 export const routes: Routes = [
 	{
@@ -15,6 +16,7 @@ export const routes: Routes = [
 			{ path: 'configuracion', component: ConfiguracionComponent },
 			{ path: 'tipo-vehiculo', component: TipoVehiculoComponent },
 			{ path: 'marcas', component: MarcaComponent },
+			{ path: 'modelos', component: ModeloComponent },
 		]
 	}
 ];

@@ -13,6 +13,7 @@ export class Configuracion {
 			this.configuracionesBase.push(new Configuracion('Tipo de Vehiculo', '/tipo-vehiculo'));
 			this.configuracionesBase.push(new Configuracion('Tipo de Servicio', '/servicios'));
 			this.configuracionesBase.push(new Configuracion('Marcas', '/marcas'));
+			this.configuracionesBase.push(new Configuracion('Modelos', '/modelos'));
 		}
 		return this.configuracionesBase;
 	}

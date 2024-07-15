@@ -112,7 +112,8 @@
 
       <div class="field">
         <label for="inventoryStatus">Inventory Status</label>
-        <p-dropdown [(ngModel)]="product.inventoryStatus" inputId="inventoryStatus" [options]="statuses">
+        <p-dropdown [(ngModel)]="product.inventoryStatus" inputId="inventoryStatus" [options]="statuses"
+          [editable]="true">
           <ng-template pTemplate="selectedItem">
             <p-tag [value]="product.inventoryStatus?.toUpperCase()"
               [severity]="getSeverity(product.inventoryStatus?.toUpperCase())" />
