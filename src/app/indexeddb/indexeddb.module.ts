@@ -4,7 +4,7 @@ import { NgxIndexedDBModule, DBConfig } from 'ngx-indexed-db';
 
 const dbConfig: DBConfig = {
 	name: 'MiBaseDeDatos2',
-	version: 1,
+	version: 2,
 	objectStoresMeta: [
 		{
 			store: 'vehiculoTipo',
